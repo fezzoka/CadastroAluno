@@ -10,11 +10,18 @@ namespace CadastroAluno.Models
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Turma { get; set; }
-
-        public AtualizarDados(string nome,string turma)
+        public double media { get; set; }
+        public void AtualizarDados(string nome,string turma)
         {
             Nome = nome;
-            turma = turma;
+            Turma = turma;
         }
+
+        public bool VerificaAprovacao() 
+            => media > 5;
+
+        public void Atualiza (double novaMedia) => media = novaMedia;
+        
+
     }
 }
