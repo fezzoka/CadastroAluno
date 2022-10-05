@@ -7,22 +7,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CadastroAluno.Data;
 using CadastroAluno.Models;
+using CadastroAluno.Contracts;
 
 namespace CadastroAluno.Controllers
 {
     public class AlunosController : Controller
     {
-        private readonly CadastroAlunoContext _context;
+        private readonly IAlunoRepository _alunoRepository;
 
-        public AlunosController(CadastroAlunoContext context)
+        public AlunosController(IAlunoRepository alunoRepository)
         {
-            _context = context;
+            _alunoRepository = alunoRepository;
         }
 
         // GET: Alunos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Aluno.ToListAsync());
+            return View(await _alunoRepository.Alunos.ToListAsync());
         }
 
         // GET: Alunos/Details/5

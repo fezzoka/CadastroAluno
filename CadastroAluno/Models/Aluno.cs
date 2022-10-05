@@ -21,7 +21,10 @@ namespace CadastroAluno.Models
             => media > 5;
 
         public void Atualiza (double novaMedia) => media = novaMedia;
-        
 
+        internal static void AtualizaDados(object nome, object nascimeto, object email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
