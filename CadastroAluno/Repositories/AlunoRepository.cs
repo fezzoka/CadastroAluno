@@ -2,7 +2,6 @@
 using CadastroAluno.Data;
 using CadastroAluno.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,18 +16,14 @@ namespace CadastroAluno.Repository
             _context = context;
         }
 
-        public AlunoRepository()
-        {
-        }
-
         public async Task<List<Aluno>> GetAlunos()
         {
             return await _context.Aluno.ToListAsync();
         }
 
-        public async Task<Aluno> GetAlunoById(int id)
+        public async Task<Aluno> GetAluno(int? id)
         {
-            return await _context.Aluno.FirstOrDefaultAsync(c => c.Id == id);
+            return await _context.Aluno.FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<Aluno> AddAluno(Aluno aluno)
@@ -42,20 +37,23 @@ namespace CadastroAluno.Repository
 
         public async Task<int> UpdateAluno(int id, Aluno alunoAlterado)
         {
-            var cliente = await _context.Aluno.FirstOrDefaultAsync(c => c.Id == id);
+            var aluno = await _context.Aluno.FirstOrDefaultAsync(a => a.Id == id);
 
-            if (cliente == null)
+            if (aluno == null)
                 return 0;
 
-            Aluno.AtualizaDados(alunoAlterado.Nome, alunoAlterado.Turma, alunoAlterado.media);
+            aluno.AtualizarDados(alunoAlterado.Nome, alunoAlterado.Turma);
 
-            _context.Entry(cliente).State = EntityState.Modified;
+            _context.Entry(aluno).State = EntityState.Modified;
             return await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAluno(int id)
+        public async Task DeleteAluno(int id)
         {
-            throw new NotImplementedException();
+            var aluno = await _context.Aluno.FirstOrDefaultAsync(a => a.Id == id);
+
+            _context.Aluno.Remove(aluno);
+            await _context.SaveChangesAsync();
         }
     }
 }
