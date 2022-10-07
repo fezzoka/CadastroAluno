@@ -16,9 +16,9 @@ namespace CadastroAluno.Models
             Nome = nome;
             Turma = turma;
         }
-
+        // Adicionado = na formula da media 
         public bool VerificaAprovacao() 
-            => media > 5;
+            => media >= 5;
 
         public void AtualizaMedia (double novaMedia) => media = novaMedia;
 

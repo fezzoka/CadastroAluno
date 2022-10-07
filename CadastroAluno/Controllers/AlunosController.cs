@@ -26,10 +26,14 @@ namespace CadastroAluno.Controllers
         {
             return View(await _repository.GetAlunos());
         }
-
+        // coloquei um if perguntando se o id é nulo ou menor que 1, caso aconteça Aparecera um Bad Request
         // GET: Alunos/Details/5
         public async Task<IActionResult> Details(int id)
         {
+            if (id == null || id < 1)
+            {
+                return BadRequest();
+            }
             var aluno = await _repository.GetAluno(id);
             if (aluno == null)
             {
